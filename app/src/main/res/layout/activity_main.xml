@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Status TextView to show API status -->
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Waiting for update..."
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Dropdown for selecting servo -->
+    <Spinner
+        android:id="@+id/spinnerServos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/servo_options"
+        android:backgroundTint="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/statusTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Button to toggle selected servo -->
+    <Button
+        android:id="@+id/btnToggleServo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toggle Servo"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/spinnerServos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Button to manually refresh API data -->
+    <Button
+        android:id="@+id/btnManualRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh Data"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/btnToggleServo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Request and Response Log Box -->
+    <TextView
+        android:id="@+id/requestLogTextView"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:background="@android:color/darker_gray"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:text="Request and Response Logs:"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/btnManualRefresh"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

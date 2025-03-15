@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ESP8266APIIntegration</string>
+    <string-array name="servo_options">
+        <item>Servo 0</item>
+        <item>Servo 1</item>
+        <item>Servo 2</item>
+        <item>Servo 3</item>
+        <item>Servo 4</item>
+    </string-array>
+</resources>
