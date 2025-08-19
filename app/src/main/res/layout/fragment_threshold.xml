@@ -36,6 +36,12 @@
                 android:text="Fast"
                 android:textColor="#00FF00"
                 android:buttonTint="#00FF00" />
+            <RadioButton
+                android:id="@+id/radioInstant"
+                android:text="Instant"
+                android:textColor="#00FF00"
+                android:buttonTint="#00FF00" />
+
         </RadioGroup>
 
         <!-- Servo Sliders -->

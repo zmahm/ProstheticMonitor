@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:text="Get Status"
         android:textColor="#00FF00"
-        android:background="#222222"
-        android:layout_marginBottom="12dp"/>
+        android:background="@drawable/styled_button"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/btnGetThresholds"
@@ -21,18 +21,10 @@
         android:layout_height="wrap_content"
         android:text="Get Thresholds"
         android:textColor="#00FF00"
-        android:background="#222222"
-        android:layout_marginBottom="12dp"/>
+        android:background="@drawable/styled_button"
+        android:padding="8dp" />
 
-    <Button
-        android:id="@+id/btnGetDefaultThresholds"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Get Default Thresholds"
-        android:textColor="#00FF00"
-        android:background="#222222"
-        android:layout_marginBottom="16dp"/>
-
+    
     <TextView
         android:id="@+id/metricsConsole"
         android:layout_width="match_parent"

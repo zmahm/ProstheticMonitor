@@ -21,22 +21,44 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp">
 
-            <RadioButton android:id="@+id/radioSlowLive"
+            <RadioButton
+                android:id="@+id/radioSlowLive"
                 android:text="Slow"
                 android:textColor="#00FF00"
                 android:buttonTint="#00FF00" />
 
-            <RadioButton android:id="@+id/radioMediumLive"
+            <RadioButton
+                android:id="@+id/radioMediumLive"
                 android:text="Medium"
                 android:checked="true"
                 android:textColor="#00FF00"
                 android:buttonTint="#00FF00" />
 
-            <RadioButton android:id="@+id/radioFastLive"
+            <RadioButton
+                android:id="@+id/radioFastLive"
                 android:text="Fast"
                 android:textColor="#00FF00"
                 android:buttonTint="#00FF00" />
+
+            <RadioButton
+                android:id="@+id/radioInstantLive"
+                android:text="Instant"
+                android:textColor="#00FF00"
+                android:buttonTint="#00FF00" />
         </RadioGroup>
+
+        <!-- Refresh button -->
+        <Button
+            android:id="@+id/btnRefreshThresholds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Refresh Thresholds"
+            android:background="@drawable/styled_button"
+            android:textColor="#00FF00"
+            android:padding="8dp"
+            style="@android:style/Widget.Button" />
+
+            
 
         <!-- Sliders will be added dynamically -->
         <LinearLayout

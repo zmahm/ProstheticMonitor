@@ -23,6 +23,7 @@ public class LiveControlFragment extends Fragment implements WebSocketManager.ES
     private LinearLayout liveServoContainer;
     private RadioGroup speedRadioGroup;
     private TextView liveWsConsole;
+    private Button refreshButton;
 
     private SeekBar[] servoSliders = new SeekBar[NUM_SERVOS];
     private int[] liveMin = new int[NUM_SERVOS];
@@ -38,11 +39,17 @@ public class LiveControlFragment extends Fragment implements WebSocketManager.ES
         liveServoContainer = view.findViewById(R.id.liveServoContainer);
         speedRadioGroup = view.findViewById(R.id.speedRadioGroupLive);
         liveWsConsole = view.findViewById(R.id.liveWsConsole);
-
+        refreshButton = view.findViewById(R.id.btnRefreshThresholds);
         liveWsConsole.setMovementMethod(new ScrollingMovementMethod());
 
         WebSocketManager.getInstance().addListener(this);
 
+        // Replace refreshButton's style manually
+        refreshButton.setBackgroundResource(R.drawable.styled_button);
+        refreshButton.setTextColor(Color.parseColor("#00FF00"));
+        refreshButton.setOnClickListener(v -> requestLiveThresholds());
+
+        // Initial request
         requestLiveThresholds();
 
         return view;
@@ -68,38 +75,65 @@ public class LiveControlFragment extends Fragment implements WebSocketManager.ES
             label.setText("Servo " + servoId);
             label.setTextColor(Color.GREEN);
             label.setTextSize(18f);
-
+            label.setText(String.format("Servo %d - Current Position: %d", servoId, liveMin[servoId]));
             SeekBar slider = new SeekBar(getContext());
-            slider.setMax(liveMax[i] - liveMin[i]);
+            slider.setMax(liveMax[servoId] - liveMin[servoId]);
             slider.setProgress(0);
             slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     int actualPosition = liveMin[servoId] + progress;
-                    sendToggle(servoId, actualPosition);
+                    label.setText(String.format("Servo %d: %d", servoId, actualPosition));
+                    sendMoveToPosition(servoId, actualPosition);
                 }
+
 
                 @Override public void onStartTrackingTouch(SeekBar seekBar) {}
                 @Override public void onStopTrackingTouch(SeekBar seekBar) {}
             });
+
+            LinearLayout buttonRow = new LinearLayout(getContext());
+            buttonRow.setOrientation(LinearLayout.HORIZONTAL);
+            buttonRow.setPadding(0, 12, 0, 12);
+
+            // Use utility for styled buttons
+            Button minButton = UIUtils.createStyledButton(getContext(), "Min", v -> sendToggle(servoId, "min"));
+            Button maxButton = UIUtils.createStyledButton(getContext(), "Max", v -> sendToggle(servoId, "max"));
+
+            buttonRow.addView(minButton);
+            buttonRow.addView(maxButton);
 
             LinearLayout group = new LinearLayout(getContext());
             group.setOrientation(LinearLayout.VERTICAL);
             group.setPadding(0, 24, 0, 24);
             group.addView(label);
             group.addView(slider);
+            group.addView(buttonRow);
 
             liveServoContainer.addView(group);
             servoSliders[servoId] = slider;
         }
     }
 
-    private void sendToggle(int servoId, int position) {
+    private void sendMoveToPosition(int servoId, int position) {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("action", "move_to_position");
+            json.put("servoId", servoId);
+            json.put("position", position);
+            json.put("speed", getSelectedSpeed());
+            WebSocketManager.getInstance().send(json.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendToggle(int servoId, String direction) {
         try {
             JSONObject json = new JSONObject();
             json.put("action", "toggle_servo");
             json.put("servoId", servoId);
-            json.put("direction", ""); // Will toggle based on state
+            json.put("direction", direction);
             json.put("speed", getSelectedSpeed());
             WebSocketManager.getInstance().send(json.toString());
         } catch (JSONException e) {
@@ -110,8 +144,9 @@ public class LiveControlFragment extends Fragment implements WebSocketManager.ES
     private String getSelectedSpeed() {
         int checked = speedRadioGroup.getCheckedRadioButtonId();
         if (checked == R.id.radioSlowLive) return "slow";
+        if (checked == R.id.radioMediumLive) return "medium";
         if (checked == R.id.radioFastLive) return "fast";
-        return "medium";
+        return "instant";
     }
 
     @Override
@@ -121,7 +156,6 @@ public class LiveControlFragment extends Fragment implements WebSocketManager.ES
 
             try {
                 JSONObject obj = new JSONObject(message);
-
                 if (obj.has("thresholds")) {
                     JSONArray array = obj.getJSONArray("thresholds");
                     for (int i = 0; i < array.length(); i++) {
@@ -130,9 +164,8 @@ public class LiveControlFragment extends Fragment implements WebSocketManager.ES
                         liveMin[id] = item.getInt("min");
                         liveMax[id] = item.getInt("max");
                     }
-                    buildSliders(); // Build UI once all thresholds are received
+                    buildSliders();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

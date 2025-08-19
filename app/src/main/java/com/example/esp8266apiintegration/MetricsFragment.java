@@ -30,11 +30,9 @@ public class MetricsFragment extends Fragment implements WebSocketManager.ESPMes
 
         Button btnStatus = view.findViewById(R.id.btnGetStatus);
         Button btnThresholds = view.findViewById(R.id.btnGetThresholds);
-        Button btnDefaultThresholds = view.findViewById(R.id.btnGetDefaultThresholds);
 
         btnStatus.setOnClickListener(v -> send("{\"action\": \"get_status\"}"));
         btnThresholds.setOnClickListener(v -> send("{\"action\": \"get_thresholds\"}"));
-        btnDefaultThresholds.setOnClickListener(v -> send("{\"action\": \"get_default_thresholds\"}"));
 
         return view;
     }
