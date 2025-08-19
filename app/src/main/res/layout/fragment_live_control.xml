@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/liveScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/liveLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Speed selection -->
+        <RadioGroup
+            android:id="@+id/speedRadioGroupLive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radioSlowLive"
+                android:text="Slow"
+                android:textColor="#00FF00"
+                android:buttonTint="#00FF00" />
+
+            <RadioButton
+                android:id="@+id/radioMediumLive"
+                android:text="Medium"
+                android:checked="true"
+                android:textColor="#00FF00"
+                android:buttonTint="#00FF00" />
+
+            <RadioButton
+                android:id="@+id/radioFastLive"
+                android:text="Fast"
+                android:textColor="#00FF00"
+                android:buttonTint="#00FF00" />
+
+            <RadioButton
+                android:id="@+id/radioInstantLive"
+                android:text="Instant"
+                android:textColor="#00FF00"
+                android:buttonTint="#00FF00" />
+        </RadioGroup>
+
+        <!-- Refresh button -->
+        <Button
+            android:id="@+id/btnRefreshThresholds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Refresh Thresholds"
+            android:background="@drawable/styled_button"
+            android:textColor="#00FF00"
+            android:padding="8dp"
+            style="@android:style/Widget.Button" />
+
+            
+
+        <!-- Sliders will be added dynamically -->
+        <LinearLayout
+            android:id="@+id/liveServoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Console -->
+        <TextView
+            android:id="@+id/liveWsConsole"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:background="#111111"
+            android:padding="12dp"
+            android:text="WebSocket Log:\n"
+            android:textColor="#00FF00"
+            android:shadowColor="#00FF00"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="6"
+            android:textSize="14sp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+</ScrollView>
