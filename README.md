@@ -32,7 +32,7 @@ This app is intended to support bench testing, calibration, and monitoring for t
 
 - **WebSocketClient**: single source of truth for the WS connection & message routing.
 - **Repository / Manager**: exposes methods like `setThresholds()`, `moveToPosition()`, `toggleServo()`, `getStatus()`, `getThresholds()`.
-- **UI**: three fragments/tabs consuming a shared ViewModel (MVVM pattern recommended).
+- **UI**: three fragments/tabs consuming a shared ViewModel
 - **Logging**: append-only in-memory buffer per session; displayed in Thresholds & Live tabs.
 
 ---
@@ -77,7 +77,6 @@ Manifest example (add to `AndroidManifest.xml`):
 ## Configuration
 
 - **WebSocket URL**: set the ESP8266 AP IP (usually `192.168.4.1`) and port `81`.
-  - Recommended: keep it in a single source (e.g., `BuildConfig`/`local.properties`/`Constants.kt`).
   - Example value: `ws://192.168.4.1:81`
 
 - **Reconnect policy**: enable automatic retry with backoff (e.g., 1s → 2s → 5s).
@@ -120,7 +119,7 @@ Manifest example (add to `AndroidManifest.xml`):
 
 ### B) Observe a Live Session
 1. Open **Live Controls** to watch all broadcast messages.
-2. Run your control client (e.g., desktop/browser) that sends `toggle_servo` or `move_to_position`.
+2. Run your control client (e.g., desktop/browser running live control) that sends `toggle_servo` or `move_to_position`.
 3. Confirm movements and states are reflected in the log.
 
 ### C) Check System Health
